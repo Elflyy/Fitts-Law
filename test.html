@@ -30,34 +30,58 @@
     <title></title>
 
     <body>
-        <div id="timeText" align="center">Click the green circle to begin</div>
-        <div id="mousePos" align="center"></div>
+        <div id="info" align="center">Click the green circle to begin</div>
         <div align="center">
             <svg id="svg"></svg>
         </div>
         <script>
-            var circles2 = [], count = 0;
-           var circles=[{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512}];
+            var circles=[{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512}];
             var width = 1200,
                 height = 800,
                 pos = {
                     x: width / 2,
                     y: height / 2
-                }, 
+                },
+                results = [],
+                count = 0, 
                 stop = 0,
-                start = 0;
+                start = 0,
+                circle,
+                index,
+                totalDistance = 0,
+                lastSeenAt = {
+                    x: null, 
+                    y: null
+                },
+                targetHit;
 				
-			document.onmousemove = function(e){
-				document.getElementById("mousePos").innerText = "Mouse X: " + e.clientX + "Mouse Y: " + e.clientY + "    clicks: " + count;
-			};
+            document.onmousemove = function(event) {
+                if(lastSeenAt.x) {
+                    totalDistance += Math.sqrt(Math.pow(lastSeenAt.y - event.clientY, 2) + Math.pow(lastSeenAt.x - event.clientX, 2));
+                }
+                lastSeenAt.x = event.clientX;
+                lastSeenAt.y = event.clientY;
+            };
+            
+            document.onmousedown = function(event) {
+                if(document.getElementById("targetCircle")){
+                    targetHit = false;
+                    document.getElementById("svg").removeChild(document.getElementById("targetCircle"));
+                    stop = getTime();
+                    document.getElementById("info").innerText = "Time: " + (stop - start) / 1e3 + " seconds, Distance: " + totalDistance + ", Count: " + count + ", Hit: " + targetHit;
+                    results.push({
+                        Time: stop - start,
+                        distance: totalDistance,
+                        hit: targetHit
+                    });
+                }
+            };
 			
             getTime = function() {
                 return Date.now();
             };
 			
-			startingPoint = function(data) {
-                var index, circle;
-                              
+			startingPoint = function(data) {                                         
                 this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 				this.el.setAttributeNS(null, "r", 25);
 				this.el.setAttributeNS(null, "cx", data.x);
@@ -66,6 +90,7 @@
 				document.getElementById("svg").appendChild(this.el);
 				
 				this.el.onclick = function() {
+                    totalDistance = 0;
                     count++;
                     start = getTime();
                     index = Math.floor(Math.random() * circles.length);
@@ -75,9 +100,10 @@
             };
 			
 			targetCircle = function(data) {
-                document.getElementById("timeText").innerText = "now click the other circle";
+                document.getElementById("info").innerText = "now click the other circle";
                 
 				this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                this.el.setAttributeNS(null, "id", "targetCircle"); 
 				this.el.setAttributeNS(null, "r", data.r);
 				this.el.setAttributeNS(null, "fill", "black");
 				this.el.setAttributeNS(null, "cx", data.d + pos.x);
@@ -86,10 +112,16 @@
 				document.getElementById("svg").appendChild(this.el);
 				
 				this.el.onclick = function() {
+                    targetHit = true;
                     this.parentNode.removeChild(this);
 					stop = getTime();
-					document.getElementById("timeText").innerText = "That took " + (stop - start) / 1e3 + " seconds";
-                }
+					document.getElementById("info").innerText = "Time: " + (stop - start) / 1e3 + " seconds, Distance: " + totalDistance + ", Count: " + count + ", Hit: " + targetHit;
+                    results.push({
+                        Time: stop - start,
+                        distance: totalDistance,
+                        hit: targetHit
+                    });
+                };
             };
 			
 			new startingPoint(pos);
