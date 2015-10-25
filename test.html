@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta content="text/html; charset=utf-8" http-equiv=content-type>
+    <style>
+        body {
+            cursor: crosshair;
+        }
+        
+        .targetCircle {
+            animation: appear 2s
+        }
+        
+        @keyframes appear {
+            from {
+                opacity: 0
+            }
+            to {
+                opacity: 1
+            }
+        }
+        
+        #svg {
+            width: 1200px;
+            height: 800px;
+        }
+    </style>
+    <title></title>
+
+    <body>
+        <div id="timeText" align="center">Click the green circle to begin</div>
+        <div id="mousePos" align="center"></div>
+        <div align="center">
+            <svg id="svg"></svg>
+        </div>
+        <script>
+            var circles2 = [], count = 0;
+           var circles=[{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512}];
+            var width = 1200,
+                height = 800,
+                pos = {
+                    x: width / 2,
+                    y: height / 2
+                }, 
+                stop = 0,
+                start = 0;
+				
+			document.onmousemove = function(e){
+				document.getElementById("mousePos").innerText = "Mouse X: " + e.clientX + "Mouse Y: " + e.clientY + "    clicks: " + count;
+			};
+			
+            getTime = function() {
+                return Date.now();
+            };
+			
+			startingPoint = function(data) {
+                var index, circle;
+                              
+                this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+				this.el.setAttributeNS(null, "r", 25);
+				this.el.setAttributeNS(null, "cx", data.x);
+				this.el.setAttributeNS(null, "fill", "green");
+				this.el.setAttributeNS(null, "cy", data.y);
+				document.getElementById("svg").appendChild(this.el);
+				
+				this.el.onclick = function() {
+                    count++;
+                    start = getTime();
+                    index = Math.floor(Math.random() * circles.length);
+                    circle = circles.splice(index,1);
+					new targetCircle(circle[0]);
+                };
+            };
+			
+			targetCircle = function(data) {
+                document.getElementById("timeText").innerText = "now click the other circle";
+                
+				this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+				this.el.setAttributeNS(null, "r", data.r);
+				this.el.setAttributeNS(null, "fill", "black");
+				this.el.setAttributeNS(null, "cx", data.d + pos.x);
+				this.el.setAttributeNS(null, "cy", pos.y);
+                
+				document.getElementById("svg").appendChild(this.el);
+				
+				this.el.onclick = function() {
+                    this.parentNode.removeChild(this);
+					stop = getTime();
+					document.getElementById("timeText").innerText = "That took " + (stop - start) / 1e3 + " seconds";
+                }
+            };
+			
+			new startingPoint(pos);
+        </script>
+    </body>
+
+</html>
