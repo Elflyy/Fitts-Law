@@ -4,128 +4,78 @@
 <head>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta content="text/html; charset=utf-8" http-equiv=content-type>
-    <style>
-        body {
-            cursor: crosshair;
-        }
-        
-        .targetCircle {
-            animation: appear 2s
-        }
-        
-        @keyframes appear {
-            from {
-                opacity: 0
-            }
-            to {
-                opacity: 1
-            }
-        }
-        
-        #svg {
-            width: 1200px;
-            height: 800px;
-        }
-    </style>
-    <title></title>
+    <link href="Content/style.css" rel="stylesheet" />
+    <title>Fitts Law Test</title>
+    <script src="Scripts/consentForm.js"></script>
+</head>
+<body>
+    <div id="containerMain"></div>
+    <script>
+        var containerMain = document.getElementById("containerMain"),
+            testView,
+            userId;
 
-    <body>
-        <div id="info" align="center">Click the green circle to begin</div>
-        <div align="center">
-            <svg id="svg"></svg>
-        </div>
-        <script>
-            var circles=[{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512},{r:16,d:-128},{r:32,d:-128},{r:64,d:-128},{r:16,d:128},{r:32,d:128},{r:64,d:128},{r:16,d:-512},{r:32,d:-512},{r:64,d:-512},{r:16,d:512},{r:32,d:512},{r:64,d:512}];
-            var width = 1200,
-                height = 800,
-                pos = {
-                    x: width / 2,
-                    y: height / 2
-                },
-                results = [],
-                count = 0, 
-                stop = 0,
-                start = 0,
-                circle,
-                index,
-                totalDistance = 0,
-                lastSeenAt = {
-                    x: null, 
-                    y: null
-                },
-                targetHit;
-				
-            document.onmousemove = function(event) {
-                if(lastSeenAt.x) {
-                    totalDistance += Math.sqrt(Math.pow(lastSeenAt.y - event.clientY, 2) + Math.pow(lastSeenAt.x - event.clientX, 2));
-                }
-                lastSeenAt.x = event.clientX;
-                lastSeenAt.y = event.clientY;
-            };
-            
-            document.onmousedown = function(event) {
-                if(document.getElementById("targetCircle")){
-                    targetHit = false;
-                    document.getElementById("svg").removeChild(document.getElementById("targetCircle"));
-                    stop = getTime();
-                    document.getElementById("info").innerText = "Time: " + (stop - start) / 1e3 + " seconds, Distance: " + totalDistance + ", Count: " + count + ", Hit: " + targetHit;
-                    results.push({
-                        Time: stop - start,
-                        distance: totalDistance,
-                        hit: targetHit
-                    });
+        RegisterView = (function () {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        containerMain.innerHTML = httpRequest.response;
+                    } else {
+                        alert('Something went wrong');
+                    }
                 }
             };
-			
-            getTime = function() {
-                return Date.now();
-            };
-			
-			startingPoint = function(data) {                                         
-                this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-				this.el.setAttributeNS(null, "r", 25);
-				this.el.setAttributeNS(null, "cx", data.x);
-				this.el.setAttributeNS(null, "fill", "green");
-				this.el.setAttributeNS(null, "cy", data.y);
-				document.getElementById("svg").appendChild(this.el);
-				
-				this.el.onclick = function() {
-                    totalDistance = 0;
-                    count++;
-                    start = getTime();
-                    index = Math.floor(Math.random() * circles.length);
-                    circle = circles.splice(index,1);
-					new targetCircle(circle[0]);
-                };
-            };
-			
-			targetCircle = function(data) {
-                document.getElementById("info").innerText = "now click the other circle";
-                
-				this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                this.el.setAttributeNS(null, "id", "targetCircle"); 
-				this.el.setAttributeNS(null, "r", data.r);
-				this.el.setAttributeNS(null, "fill", "black");
-				this.el.setAttributeNS(null, "cx", data.d + pos.x);
-				this.el.setAttributeNS(null, "cy", pos.y);
-                
-				document.getElementById("svg").appendChild(this.el);
-				
-				this.el.onclick = function() {
-                    targetHit = true;
-                    this.parentNode.removeChild(this);
-					stop = getTime();
-					document.getElementById("info").innerText = "Time: " + (stop - start) / 1e3 + " seconds, Distance: " + totalDistance + ", Count: " + count + ", Hit: " + targetHit;
-                    results.push({
-                        Time: stop - start,
-                        distance: totalDistance,
-                        hit: targetHit
-                    });
-                };
-            };
-			
-			new startingPoint(pos);
-        </script>
-    </body>
+            httpRequest.open('GET', 'Views/register.html', true);
+            httpRequest.send(null);
+        })();
 
+        getTestView = function () {
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        testView = httpRequest.response;
+                    } else {
+                        alert('Something went wrong');
+                    }
+                }
+            };
+            httpRequest.open('GET', 'Views/fittsLawTest.html', true);
+            httpRequest.send(null);
+        }();
+
+        function loadFittsLawTestJavascript() {
+            var oHead = document.getElementsByTagName('HEAD').item(0);
+            var oScript = document.createElement("script");
+            oScript.type = "text/javascript";
+            oScript.src = "Scripts/fittsLawTest.js";
+            oHead.appendChild(oScript);
+        };
+        
+        function postUser() {
+            var User = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value
+            },
+            httpRequest = new XMLHttpRequest();
+
+            httpRequest.onreadystatechange = function () {
+                if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                    if (httpRequest.status === 200) {
+                        userId = httpRequest.response;
+                        containerMain.innerHTML = testView;
+                        loadFittsLawTestJavascript();
+                    } else {
+                        alert('Something went wrong');
+                    }
+                }
+            };
+            httpRequest.open('POST', 'api/user', true);
+            httpRequest.setRequestHeader("Content-type", "application/json; charset=utf-8");
+            httpRequest.send(JSON.stringify(User));
+        };
+    </script>
+</body>
 </html>
+
