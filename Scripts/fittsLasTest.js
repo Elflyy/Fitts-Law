@@ -36,6 +36,7 @@ svg.onmousemove = function (event) {
     lastSeenAt.y = event.clientY; //store reference to last seen y-coord
 };
 
+//if user misses target circle
 svg.onmouseup = function (event) {
     var targetCircle = document.getElementById("targetCircle");
     var startingPoint = document.getElementById("startingPoint");
@@ -65,6 +66,7 @@ svg.onmouseup = function (event) {
     }
 };
 
+//green circle in middle of screen
 startingPoint = function (data) {
     instruction.innerHTML = 'Click the green circle to begin';
     trialCount.innerHTML = 'Welcome';
@@ -90,6 +92,7 @@ startingPoint = function (data) {
     };
 };
 
+//black circle
 targetCircle = function (data) {
     
     this.el = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -135,4 +138,5 @@ trialComplete = function () {
     svg.remove();
 }
 
+//start of trial
 new startingPoint(pos);
