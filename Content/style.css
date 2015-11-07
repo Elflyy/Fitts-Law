@@ -24,7 +24,7 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-color:black;
+    background-color:black; 
     color: white;
     opacity: .95;
     z-index: 3;
