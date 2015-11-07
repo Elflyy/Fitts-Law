@@ -14,7 +14,7 @@
         var containerMain = document.getElementById("containerMain"),
             testView,
             userId;
-
+  
         RegisterView = (function () {
             var httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function () {
@@ -56,14 +56,15 @@
         function postUser() {
             var User = {
                 firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value
+                lastName: document.getElementById('lastName').value,
+                deviceUsed: document.getElementById('deviceUsed').value
             },
-            httpRequest = new XMLHttpRequest();
 
+            httpRequest = new XMLHttpRequest();
             httpRequest.onreadystatechange = function () {
                 if (httpRequest.readyState === XMLHttpRequest.DONE) {
-                    if (httpRequest.status === 200) {
-                        userId = httpRequest.response;
+                    if (httpRequest.status === 200) {          
+                        userId = httpRequest.responseText;
                         containerMain.innerHTML = testView;
                         loadFittsLawTestJavascript();
                     } else {
