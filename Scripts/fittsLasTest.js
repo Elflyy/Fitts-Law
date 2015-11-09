@@ -58,7 +58,7 @@ svg.onmouseup = function (event) {
         //    TrialError: hitError,
         //    TrialRadius: r,
         //    TrialDistance: distance,
-        //    TrialDirection: (startingX > targetX) ? "R" : "L"
+        //    TrialDirection: (startingX > targetX) ? "L" : "R"
         //});
 
         svg.removeChild(targetCircle);
