@@ -7,10 +7,3 @@ Click <a id='wikiLink' href='https://en.wikipedia.org/wiki/Fitts%27s_law' title=
 
 
 Some APIs were not included
-
-<script>
-document.addEventListener('DOMContentReady', function () {
-  document.getElementById('wikiLink')
-          .addEventListener('click', alert('This will nav to wiki'));
-});
-</script>
