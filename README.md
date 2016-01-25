@@ -3,7 +3,7 @@
 The following files were made to help collect data to test Fitt's Law. More info in regard to the data we collected can be found in Scripts/consentForm.js. 
 
 
-Click <a href='https://en.wikipedia.org/wiki/Fitts%27s_law'>this</a> if you want more info regarding Fitt's Law.
+Click <a href='https://en.wikipedia.org/wiki/Fitts%27s_law' onhover='alert("asdf")'>this</a> if you want more info regarding Fitt's Law
 
 
-Some APIs were not included.
+Some APIs were not included
